@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main  # Só dispara o pipeline para mudanças na branch principal
+      - master
 
 jobs:
   build:
