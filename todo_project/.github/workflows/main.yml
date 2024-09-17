@@ -3,7 +3,11 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main  # Só dispara o pipeline para mudanças na branch principal
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
       - master
 
 jobs:
