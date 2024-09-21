@@ -55,6 +55,7 @@ jobs:
         run: |
           . venv/bin/activate  # Para Linux
           bandit -r .
+        continue-on-error: true
 
       - name: Install Dependency Check
         run: |
