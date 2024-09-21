@@ -1,0 +1,12 @@
+Para rodar o docker voce precisa usar esse comando:
+ 
+docker run -p 5000:5000 caso-de-uso
+
+Para editar o Dockerfile voce usa esse comando
+
+docker build -t caso-de-uso .
+
+
+//// IMPORTANTE 
+
+O nome da imagem docker é caso-de-uso, não task-manager-flask
