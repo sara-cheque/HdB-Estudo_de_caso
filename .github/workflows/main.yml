@@ -1,44 +1,48 @@
-stages:
-  - build
-  - test
-  - security_check
+name: CI Pipeline  # Nome do seu workflow
 
-variables:
-  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
-  VENV_PATH: "$CI_PROJECT_DIR/venv"
+on:
+  push:
+    branches:
+      - main  # Altere para o nome da sua branch principal
+  pull_request:
+    branches:
+      - main  # Altere para o nome da sua branch principal
 
-cache:
-  paths:
-    - .cache/pip
-    - venv/
+jobs:
+  build:
+    runs-on: windows-latest  
 
-before_script:
-  - python3 -m venv $VENV_PATH
-  - .\$VENV_PATH\Scripts\activate  # Alterado para Windows
-  - pip install -r requirements.txt
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-build:
-  stage: build
-  script:
-    - echo "Compilação e setup do ambiente concluído."
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'  # Altere para a versão desejada
 
-test:
-  stage: test
-  script:
-    - pytest
+      - name: Create virtual environment
+        run: |
+          python -m venv venv
+          echo "Virtual environment created."
 
-bandit_security_scan:
-  stage: security_check
-  script:
-    - pip install bandit
-    - bandit -r "$CI_PROJECT_DIR"  # Alterado para usar variável
+      - name: Install dependencies
+        run: |
+          .\venv\Scripts\activate  
+          pip install -r requirements.txt
 
-  allow_failure: true
+      - name: Run tests
+        run: |
+          . venv/bin/activate
+          pytest
 
-dependency_check:
-  stage: security_check
-  script:
-    - java -version
-    - dependency-check --project "EstudoDeCaso" -s "$CI_PROJECT_DIR" -o "$CI_PROJECT_DIR/relatorios"  # Alterado para usar variável
+      - name: Run Bandit Security Scan
+        run: |
+          . venv/bin/activate
+          pip install bandit
+          bandit -r .
 
-  allow_failure: true
+      - name: Run Dependency Check
+        run: |
+          echo "Running Dependency Check..."
+          dependency-check --project "EstudoDeCaso" -s . -o ./relatorios  # Use caminhos relativos
