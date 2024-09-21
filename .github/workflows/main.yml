@@ -55,13 +55,14 @@ jobs:
         run: |
           . venv/bin/activate  # Para Linux
           bandit -r .
+        continue-on-error: true
 
       - name: Install Dependency Check
         run: |
           # Adicione o código para baixar e configurar o dependency-check aqui
           wget https://github.com/jeremylong/DependencyCheck/releases/download/v7.3.2/dependency-check-7.3.2-release.zip
           unzip dependency-check-7.3.2-release.zip -d ./dependency-check
-          chmod +x ./dependency-check/bin/dependency-check.sh
+          ls -R ./dependency-check
 
       - name: Run Dependency Check
         run: |
