@@ -66,4 +66,4 @@ jobs:
 
       - name: Run Dependency Check
         run: |
-          ./dependency-check/bin/dependency-check.sh --project "EstudoDeCaso" -s . -o ./relatorios
+          ./dependency-check/dependency-check/bin/dependency-check.sh --project "EstudoDeCaso" -s . -o ./relatorios
