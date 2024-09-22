@@ -88,7 +88,7 @@ jobs:
     - name: Deploy para estágio
       run: |
         echo "Realizando deploy no ambiente de stage"
-        python ./todo_project/run.py'
+        python ./todo_project/run.py
 
     - name: Verificação de segurança com OWASP ZAP
       uses: zaproxy/action-baseline@v0.12.0
