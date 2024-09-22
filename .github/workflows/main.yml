@@ -136,7 +136,12 @@ jobs:
       - name: Run Prometheus
         run: |
           docker run -d --name prometheus -p 9090:9090 -v ${{ github.workspace }}/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
-      
+          
+      - name: Verify Application Status
+        run: |
+          sleep 10  # Dê um tempo para a aplicação iniciar
+          curl -X GET "http://localhost:5000/metrics"  # Verifica o endpoint de métricas da sua aplicação
+  
       - name: Verify Prometheus status
         run: |
           sleep 30  
