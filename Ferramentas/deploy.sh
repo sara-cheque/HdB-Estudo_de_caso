@@ -27,7 +27,7 @@ else
     echo "Erro na verificação de segurança."
     echo "Listando arquivos no diretório /zap/wrk/:"
     ls -la $(pwd)
-fi
+fi || true
 
 # Parar o processo do deploy
 echo "Parando o deploy..."

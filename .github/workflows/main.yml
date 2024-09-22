@@ -92,7 +92,7 @@ jobs:
     - name: Deploy e Verificação de segurança
       run: |
         chmod 777 ./Ferramentas/deploy.sh 
-        sudo bash ./Ferramentas/deploy.sh  
+        ./Ferramentas/deploy.sh  
 
     - name: Upload report.html como artefato
       uses: actions/upload-artifact@v3
