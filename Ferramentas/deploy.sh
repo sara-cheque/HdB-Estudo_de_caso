@@ -17,10 +17,16 @@ for i in {1..10}; do
 done
 
 # Executar a verificação de segurança com OWASP ZAP
+chmod -R 777 $(pwd)
 echo "Iniciando a verificação de segurança com OWASP ZAP..."
-if docker run --network host -v $(pwd):/zap/wrk/:rw -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t http://localhost:5000  touch /zap/wrk/report.html; then    echo "Verificação de segurança concluída com sucesso."
+if docker run --network host -v $(pwd):/zap/wrk/:rw -u 0 -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -g /zap/wrk/zap.yaml -t http://localhost:5000  touch /zap/wrk/report.html; then    
+    echo "Verificação de segurança concluída com sucesso."
+    echo "Listando arquivos no diretório /zap/wrk/:"
+    ls -la $(pwd)
 else
     echo "Erro na verificação de segurança."
+    echo "Listando arquivos no diretório /zap/wrk/:"
+    ls -la $(pwd)
 fi
 
 # Parar o processo do deploy
