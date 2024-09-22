@@ -8,3 +8,4 @@ Jinja2==3.1.2
 werkzeug==2.3.3
 coverage
 python-dotenv
+prometheus_flask_exporter
