@@ -97,7 +97,7 @@ jobs:
     - name: Check report for vulnerabilities
       run: |
         pwd
-        ls -Ral
+        ls -R | grep "/zap/wrk/zap/wrk/"
         if [ -f ./zap/wrk/zap/wrk/report.html ]; then
           if grep -q "Vulnerabilities found" /zap/wrk/zap/wrk/report.html; then
               echo "Vulnerabilidades encontradas!"
