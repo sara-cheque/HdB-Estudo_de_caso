@@ -99,3 +99,33 @@ jobs:
       with:
         name: zap-report
         path: report.html
+
+  monitoring:
+    runs-on: ubuntu-latest
+    needs: review  # Faz o monitoramento depender do job de revisão
+      
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Pull Prometheus Docker image
+        run: |
+          docker pull prom/prometheus
+      
+      - name: Create Prometheus configuration
+        run: |
+         echo "global:
+            scrape_interval: 15s
+            scrape_configs:
+            - job_name: 'my_application'
+              static_configs:
+                - targets: ['localhost:8000']" > prometheus.yml
+      
+      - name: Run Prometheus
+        run: |
+          docker run -d --name prometheus -p 9090:9090 -v ${{ github.workspace }}/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
+      
+      - name: Verify Prometheus status
+        run: |
+          sleep 10  # Espera um pouco para o Prometheus iniciar
+          curl -X GET "http://localhost:9090/api/v1/status/flags"
