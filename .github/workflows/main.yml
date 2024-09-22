@@ -73,7 +73,7 @@ jobs:
   
   review:        
     runs-on: ubuntu-latest
-    needs: security-scan
+    needs: build
 
     steps:
     - name: Checkout código
@@ -105,7 +105,7 @@ jobs:
 
   monitoring:
     runs-on: ubuntu-latest
-    needs: review
+    needs: build
       
     steps:
       - name: Checkout code
