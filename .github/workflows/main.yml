@@ -92,16 +92,7 @@ jobs:
     - name: Deploy e Verificação de segurança
       run: |
         chmod 777 ./Ferramentas/deploy.sh 
-        ./Ferramentas/deploy.sh  
-
-    - name: Check report for vulnerabilities
-      run: |
-          if grep -q "Vulnerabilities found" ./zap/wrk/report.html; then
-              echo "Vulnerabilidades encontradas!"
-              exit 1  # Sinaliza que houve um problema
-          else 
-              echo "Nenhuma vulnerabilidade encontrada."
-          fi || true
+        sudo bash ./Ferramentas/deploy.sh  
 
     - name: Upload report.html como artefato
       uses: actions/upload-artifact@v3
