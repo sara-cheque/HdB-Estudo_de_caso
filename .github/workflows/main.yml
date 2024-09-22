@@ -85,25 +85,8 @@ jobs:
       run: |
         pip install -r requirements.txt
 
-    - name: Deploy para estágio
+    
+    - name: Deploy e Verificação de segurança
       run: |
-        echo "Realizando deploy no ambiente de stage"
-        python ./todo_project/run.py
-        DEPLOY_PID=$!
-
-    - name: Aguardar o deploy iniciar
-      run: |
-        echo "Aguardando o deploy iniciar..."
-        sleep 20 
-    - name: Verificação de segurança com OWASP ZAP
-      uses: zaproxy/action-baseline@v0.12.0
-      with:
-        target: 'http://localhost:5000'  
-        format: 'HTML'
-        output-path: './relatorios'
-      continue-on-error: true
-
-    - name: Parar o deploy
-      run: |
-        echo "Parando o deploy..."
-        kill $DEPLOY_PID 
+        chmod +x deploy.sh 
+        /.Ferramentas/deploy.sh  
