@@ -96,8 +96,8 @@ jobs:
 
     - name: Check report for vulnerabilities
       run: |
-        if [ -f ./HdB-Estudo_de_caso/relatorios ]; then
-          if grep -q "Vulnerabilities found" ./HdB-Estudo_de_caso/relatorios/report.html; then
+        if [ -d ./zap/wrk/ ]; then
+          if grep -q "Vulnerabilities found" ./zap/wrk/report.html; then
               echo "Vulnerabilidades encontradas!"
               exit 1  # Sinaliza que houve um problema
           else
@@ -106,4 +106,4 @@ jobs:
         else
           echo "Arquivo de relatório não encontrado."
           exit 1
-        fi || true
+        fi 
