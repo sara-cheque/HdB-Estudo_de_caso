@@ -104,7 +104,6 @@ jobs:
 
   monitoring:
     runs-on: ubuntu-latest
-    needs: review  # Faz o monitoramento depender do job de revisão
       
     steps:
       - name: Checkout code
@@ -116,12 +115,15 @@ jobs:
       
       - name: Create Prometheus configuration
         run: |
-         echo "global:
-            scrape_interval: 15s
-            scrape_configs:
-            - job_name: 'my_application'
-              static_configs:
-                - targets: ['localhost:8000']" > prometheus.yml
+          chmod 777 ./Ferramentas/Aplication.sh 
+          ./Ferramentas/Aplication.sh 
+          echo "global:
+             scrape_interval: 15s
+             scrape_configs:
+             - job_name: 'my_application'
+               static_configs:
+                 - targets: ['localhost:5000']" > prometheus.yml
+
       
       - name: Run Prometheus
         run: |
