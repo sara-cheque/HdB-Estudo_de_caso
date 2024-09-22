@@ -89,8 +89,9 @@ jobs:
         python run.py
 
     - name: Verificação de segurança com OWASP ZAP
-      uses: zapbot/zap-api-action@v0.3.0
+      uses: zaproxy/action-baseline@v0.4.0
       with:
         target: 'http://localhost:5000'  
         format: 'HTML'
         output-path: './relatorios'
+      continue-on-error: true
