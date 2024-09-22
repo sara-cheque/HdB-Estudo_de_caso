@@ -112,11 +112,13 @@ jobs:
       - name: Pull Prometheus Docker image
         run: |
           docker pull prom/prometheus
-      
+
+      - name: Start Application
+        run: |
+          nohup python ./todo_project/run.py & 
+
       - name: Create Prometheus configuration
         run: |
-          chmod 777 ./Ferramentas/Aplication.sh 
-          ./Ferramentas/Aplication.sh 
           echo "global:
              scrape_interval: 15s
              scrape_configs:
@@ -131,5 +133,5 @@ jobs:
       
       - name: Verify Prometheus status
         run: |
-          sleep 10  # Espera um pouco para o Prometheus iniciar
+          sleep 30  
           curl -X GET "http://localhost:9090/api/v1/status/flags"
