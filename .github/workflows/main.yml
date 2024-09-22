@@ -5,10 +5,12 @@ on:
     branches:
       - main 
       - deploy
+      - monitoramento
   pull_request:
     branches:
       - main 
       - deploy 
+      - monitoramento
 
 jobs:
   build:
