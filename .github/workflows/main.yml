@@ -89,7 +89,12 @@ jobs:
       run: |
         echo "Realizando deploy no ambiente de stage"
         python ./todo_project/run.py
+        DEPLOY_PID=$!
 
+    - name: Aguardar o deploy iniciar
+      run: |
+        echo "Aguardando o deploy iniciar..."
+        sleep 20 
     - name: Verificação de segurança com OWASP ZAP
       uses: zaproxy/action-baseline@v0.12.0
       with:
@@ -97,3 +102,8 @@ jobs:
         format: 'HTML'
         output-path: './relatorios'
       continue-on-error: true
+
+    - name: Parar o deploy
+      run: |
+        echo "Parando o deploy..."
+        kill $DEPLOY_PID 
