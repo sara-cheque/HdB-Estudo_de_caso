@@ -96,7 +96,7 @@ jobs:
 
     - name: Check report for vulnerabilities
       run: |
-        if [ -d ./zap/wrk/ ]; then
+        if [ -f ./zap/wrk/report.html ]; then
           if grep -q "Vulnerabilities found" ./zap/wrk/report.html; then
               echo "Vulnerabilidades encontradas!"
               exit 1  # Sinaliza que houve um problema
@@ -107,3 +107,9 @@ jobs:
           echo "Arquivo de relatório não encontrado."
           exit 1
         fi 
+
+    - name: Upload report.html como artefato
+      uses: actions/upload-artifact@v3
+      with:
+        name: zap-report
+        path: ./zap/wrk/report.html
