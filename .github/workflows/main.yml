@@ -98,4 +98,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: zap-report
-        path: ./zap/wrk/report.html
+        path: report.html
