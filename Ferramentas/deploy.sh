@@ -19,7 +19,7 @@ done
 # Executar a verificação de segurança com OWASP ZAP
 echo "Iniciando a verificação de segurança com OWASP ZAP..."
 mkdir -p ./relatorios
-if docker run --network host -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t http://localhost:5000 -r ./relatorios/report.html; then
+if docker run --network host -v $PWD/relatorios:/zap/wrk -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t http://localhost:5000 -r /zap/wrk/report.html; then
     echo "Verificação de segurança concluída com sucesso."
 else
     echo "Erro na verificação de segurança."
