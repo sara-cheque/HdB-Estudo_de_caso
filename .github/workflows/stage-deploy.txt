@@ -1,0 +1,35 @@
+name: Deploy to Staging
+
+on:
+  push:
+    branches:
+      - stage
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v3
+
+    - name: Configurar ambiente Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Instalar dependências
+      run: |
+        pip install -r requirements.txt
+
+    - name: Deploy para estágio
+      run: |
+        echo "Realizando deploy no ambiente de stage"
+        python run.py
+
+    - name: Verificação de segurança com OWASP ZAP
+      uses: zapbot/zap-api-action@v0.3.0
+      with:
+        target: 'http://localhost:5000'  # Ajuste o endereço conforme o deploy da aplicação
+        format: 'HTML'
+        output-path: './relatorios'
